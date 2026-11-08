@@ -38,13 +38,13 @@ body{
 h1{font-size:1.75rem; font-weight:700; margin:0 0 .25rem; letter-spacing:.04em}
 .sub{color:var(--muted); margin:0 0 1.75rem; font-size:.95rem}
 .nav{
-  display:grid; grid-template-columns:repeat(4,minmax(0,1fr)) auto; gap:.6rem;
-  align-items:end; padding:1rem 0; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule);
+  display:flex; flex-wrap:wrap; align-items:end; gap:.5rem .7rem;
+  padding:.8rem 0; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule);
 }
 .nav label{display:flex; flex-direction:column; font-size:.85rem; color:var(--muted); gap:.25rem}
 select{
   font:inherit; font-size:.95rem; color:var(--ink); background:var(--field);
-  border:1px solid var(--rule); border-radius:4px; padding:.35rem .5rem; width:100%;
+  border:1px solid var(--rule); border-radius:4px; padding:.3rem .4rem; width:auto; min-width:3.4rem;
 }
 select:focus-visible,button:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
 .arrows{display:flex; gap:.4rem}
@@ -68,20 +68,18 @@ button:hover{background:var(--hover)}
 .zh .head{display:block; font-weight:600; margin-bottom:.4rem}
 .zh .zn{color:var(--accent); font-size:.85rem; font-weight:600; margin-right:.45rem; font-variant-numeric:tabular-nums}
 .pending{color:var(--muted)}
-.exp{display:flex; flex-wrap:wrap; align-items:end; gap:.6rem .9rem; padding:.8rem 0; border-bottom:1px solid var(--rule); font-size:.85rem; color:var(--muted)}
+.exp{display:flex; flex-wrap:wrap; align-items:end; gap:.5rem .6rem; margin-left:auto; padding-left:.8rem; border-left:1px solid var(--rule); font-size:.85rem; color:var(--muted)}
 .exp[hidden],.exp-c[hidden]{display:none}
 .exp label{display:flex; flex-direction:column; gap:.25rem}
 .exp-c{display:flex; gap:.6rem; flex-wrap:wrap}
 .exp-t{font-weight:600; color:var(--ink); align-self:center}
-.exp input{font:inherit; font-size:.95rem; color:var(--ink); background:var(--field); border:1px solid var(--rule); border-radius:4px; padding:.35rem .5rem; width:5.5rem}
+.exp input{font:inherit; font-size:.95rem; width:4.2rem !important; color:var(--ink); background:var(--field); border:1px solid var(--rule); border-radius:4px; padding:.35rem .5rem; width:5.5rem}
 .exp select{width:auto}
 button.exbtn{width:auto; height:2.2rem; padding:0 1rem; font-size:.95rem}
 .exmsg{align-self:center}
 .foot{margin-top:2.5rem; padding-top:1rem; border-top:1px solid var(--rule); color:var(--muted); font-size:.85rem}
 @media (max-width:640px){
-  .nav{grid-template-columns:1fr 1fr}
-  .arrows{grid-column:1 / -1; justify-content:space-between}
-  .arrows button{flex:1}
+  .exp{margin-left:0; padding-left:0; border-left:0; width:100%}
   .cols{grid-template-columns:2.2rem minmax(0,1fr)}
   .colhead.c1{display:none}
   .colhead.c2{grid-column:2}
@@ -97,26 +95,25 @@ button.exbtn{width:auto; height:2.2rem; padding:0 1rem; font-size:.95rem}
 
   <div class="nav">
     <label>卷<select id="selBook"></select></label>
-    <label>尼斯編號<select id="selNiese"></select></label>
-    <label>章<select id="selChap"><option value="1">第1章</option></select></label>
-    <label>惠斯頓分段<select id="selWhiston"></select></label>
+    <label>尼斯<select id="selNiese"></select></label>
+    <label>章<select id="selChap"><option value="1">1</option></select></label>
+    <label>惠斯頓<select id="selWhiston"></select></label>
     <div class="arrows">
       <button id="prev" aria-label="上一段" title="上一段">‹</button>
       <button id="next" aria-label="下一段" title="下一段">›</button>
     </div>
-  </div>
-
-  <div class="exp" id="exp">
-    <span class="exp-t">匯出 txt</span>
-    <label>範圍<select id="exScope"><option value="cur">本段</option><option value="book">本卷</option><option value="all">全書</option><option value="custom">自訂範圍</option></select></label>
-    <span class="exp-c" id="exCustom" hidden>
-      <label>卷<select id="exBook"><option value="1">第一卷</option><option value="2">第二卷</option></select></label>
-      <label>尼斯由<input type="number" id="exFrom" min="1" inputmode="numeric"></label>
-      <label>至<input type="number" id="exTo" min="1" inputmode="numeric"></label>
-    </span>
-    <label>內容<select id="exWhat"><option value="both">希臘文及中文</option><option value="grc">只希臘文</option><option value="zh">只中文</option></select></label>
-    <button id="exGo" class="exbtn" type="button">匯出</button>
-    <span class="exmsg" id="exMsg" role="status"></span>
+    <div class="exp" id="exp">
+      <span class="exp-t">匯出</span>
+      <label>範圍<select id="exScope"><option value="cur">本段</option><option value="book">本卷</option><option value="all">全書</option><option value="custom">自訂</option></select></label>
+      <span class="exp-c" id="exCustom" hidden>
+        <label>卷<select id="exBook"><option value="1">1</option><option value="2">2</option></select></label>
+        <label>由<input type="number" id="exFrom" min="1" inputmode="numeric"></label>
+        <label>至<input type="number" id="exTo" min="1" inputmode="numeric"></label>
+      </span>
+      <label>內容<select id="exWhat"><option value="both">希＋中</option><option value="grc">希臘文</option><option value="zh">中文</option></select></label>
+      <button id="exGo" class="exbtn" type="button">匯出</button>
+      <span class="exmsg" id="exMsg" role="status"></span>
+    </div>
   </div>
 
   <div class="loc" id="loc"></div>
@@ -776,9 +773,9 @@ function range(book, idx){
 }
 function fillSelects(){
   const b = state.book;
-  $("selBook").innerHTML = [1,2].map(n=>`<option value="${n}">${BOOKNAME[n]}</option>`).join("");
-  $("selNiese").innerHTML = NIESE[b].starts.map((n,i)=>`<option value="${i}">尼斯 ${n}</option>`).join("");
-  $("selWhiston").innerHTML = NIESE[b].starts.map((n,i)=>`<option value="${i}">第${i+1}段</option>`).join("");
+  $("selBook").innerHTML = [1,2].map(n=>`<option value="${n}">${n}</option>`).join("");
+  $("selNiese").innerHTML = NIESE[b].starts.map((n,i)=>`<option value="${i}">${n}</option>`).join("");
+  $("selWhiston").innerHTML = NIESE[b].starts.map((n,i)=>`<option value="${i}">${i+1}</option>`).join("");
 }
 function render(push){
   const b = state.book, i = state.idx;
